@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="person-detail col-md-6 col-lg-6 col-xl-6" *ngIf="selectedContact">
+            <div id="detail-name" class="ml-2 detail-name">{{selectedContact.name}}</div>
+            <div id="detail-email" class="ml-3 mt-1 ">Email: {{selectedContact.email}}</div>
+            <div id="detail-mobile" class="ml-3 mt-3 ">Mobile: +91 {{selectedContact.mobile}}</div>
+            <div id="detail-landline" class="ml-3 ">Landline: {{selectedContact.landline}}</div>
+            <div id="detail-website" class="ml-3 mt-3 ">Website: {{selectedContact.website}}</div>
+            <div id="detail-address" class="ml-3 ">Address: {{selectedContact.address}}</div>
+        </div>
+        
+        <div class="d-flex ml-5 pl-5 pt-2 col-md-2 col-lg-2 col-xl-2 fixed-top">
+            <div class="d-flex fit-height col-1" (click)="openModal()">
+              <img src="../../assets/Edit-icon.png" alt="Edit-icon" width="18" height="20">
+              <div class="ml-1 other-text text-uppercase">edit</div>
+            </div>
+            
+            <div class="d-flex ml-5 pl-5 fit-height col-1 cursor-pointer" (click)="deleteContact()">
+              <img src="../../assets/delete2.png" alt="delete" width="20" height="30">
+              <div class="other-text text-uppercase">delete</div>
+            </div>
+          </div>
+    </div>    
+</div>

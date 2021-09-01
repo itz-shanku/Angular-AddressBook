@@ -1,0 +1,36 @@
+<div class="heading py-4 pl-3">Address Book</div>
+
+<div class="menu d-flex mb-2 justify-content-between">
+  <strong>
+    <div class="menu-opt d-flex">
+      <a href="./index.html">
+        <div class="active-link px-3 py-1 text-decoration-none">HOME</div>
+      </a>
+      <a (click)="openModal();" routerLink="add" class="d-flex align-items-center text-decoration-none">+ADD</a>
+    </div>
+  </strong>
+  <div class="menu-image d-flex mr-3 mt-1">
+    <div class="menu-image-item d-flex align-items-center">
+      <img src="../assets/blog-icon.png" alt="blog-icon"/>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="ml-4 mt-4 col-md-4 col-lg-4 col-xl-4 contact-text">
+            <b>CONTACTS</b>
+            <div id="add-cards-here" class="mt-3">
+                <div *ngFor="let contact of contactList" class="border person-card" 
+                [routerLink]="['/contact', contact.id]">
+                    <div class="ml-2 name-text">{{contact.name}}</div>
+                    <div class="ml-2 other-text">{{contact.email}}</div>
+                    <div class="ml-2 other-text pt-1">+91 {{contact.mobile}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="ml-3 mt-4 pt-4 p-2 col-md-7 col-lg-7 col-xl-7">
+          <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
