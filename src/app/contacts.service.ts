@@ -1,52 +1,49 @@
 import { Injectable } from '@angular/core';
-import { ContactDetails, DEFAULT_LIST } from './model';
-import { HttpClient } from '@angular/common/http';
+import { Console } from 'node:console';
+import { ContactDetails, DEFAULT_LIST, PersonDetails } from './model';
+import { RestApiService } from './rest-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
 
-  private restAPIServer = 'https://localhost:44321/api/addressbook';
+  contactList: PersonDetails | undefined;
 
   constructor(
-    private http: HttpClient
+    private httpService: RestApiService
   ) { }
 
   // tslint:disable-next-line: typedef
   loadInitialContact(){
-    return `/contact/${DEFAULT_LIST[0].id}`;
+    return `/contact/${DEFAULT_LIST[0].Id}`;
   }
 
   // tslint:disable-next-line: typedef
   getDefaultList(){
-    return DEFAULT_LIST;
+    return this.httpService.getStaticData();
   }
 
   // tslint:disable-next-line: typedef
   updateContactList(openContact: any, id: any){
-    DEFAULT_LIST[DEFAULT_LIST.findIndex(element => element.id === +id)] = openContact;
+    DEFAULT_LIST[DEFAULT_LIST.findIndex(element => element.Id === +id)] = openContact;
   }
 
   // tslint:disable-next-line: typedef
   fetchContactById(id: any){
-    return DEFAULT_LIST[DEFAULT_LIST.findIndex(element => element.id === +id)];
-  }
-
-  // tslint:disable-next-line: typedef
-  httpFetchContactById(id: any){
-    return this.http.get<ContactDetails>(this.restAPIServer + '/contact/' + id);
+    return DEFAULT_LIST[DEFAULT_LIST.findIndex(element => element.Id === +id)];
   }
 
   // tslint:disable-next-line: typedef
   contactDeletion(id: any){
-    DEFAULT_LIST.splice(DEFAULT_LIST.findIndex(element => element.id === +id), 1);
-    return `/contact/${DEFAULT_LIST[0].id}`;
+    console.log(this.httpService.deleteSpecificContact(id).subscribe());
+    // DEFAULT_LIST.splice(DEFAULT_LIST.findIndex(element => element.Id === +id), 1);
+    return `/contact/${DEFAULT_LIST[0].Id}`;
   }
 
   // tslint:disable-next-line: typedef
   fetchSelectedContact(id: any){
-    return DEFAULT_LIST.find(element => element.id === +id);
+    return this.httpService.getSpecificContact(id);
   }
 
   // tslint:disable-next-line: typedef
@@ -57,6 +54,6 @@ export class ContactsService {
 
   // tslint:disable-next-line: typedef
   navigatingNewContact(){
-    return (`/contact/${DEFAULT_LIST[DEFAULT_LIST.length].id}`);
+    return (`/contact/${DEFAULT_LIST[DEFAULT_LIST.length].Id}`);
   }
 }

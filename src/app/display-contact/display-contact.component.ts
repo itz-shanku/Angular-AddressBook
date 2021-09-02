@@ -26,7 +26,9 @@ export class DisplayContactComponent implements OnInit {
     this.route.params.subscribe((param: any) => {
       this.id = param.id;
       // tslint:disable-next-line: no-shadowed-variable
-      this.selectedContact = this.contactServices.fetchSelectedContact(this.id); });
+      this.contactServices.fetchSelectedContact(this.id).subscribe((specificContact: any) => {
+        this.selectedContact = specificContact;
+      }); });
   }
 
   // tslint:disable-next-line: typedef

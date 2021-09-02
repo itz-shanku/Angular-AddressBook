@@ -16,10 +16,13 @@ export class HomepageComponent implements OnInit {
     private routing: Router
     ) { }
 
-  contactList = this.contactServices.getDefaultList();
+  contactList: any;
   id: any;
 
   ngOnInit(): void {
+    this.contactServices.getDefaultList().subscribe((listOfContacts: any) => {
+      this.contactList = listOfContacts;
+    });
     this.loadFirstContact();
   }
 

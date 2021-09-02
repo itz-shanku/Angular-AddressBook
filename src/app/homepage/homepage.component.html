@@ -22,10 +22,10 @@
             <b>CONTACTS</b>
             <div id="add-cards-here" class="mt-3">
                 <div *ngFor="let contact of contactList" class="border person-card" 
-                [routerLink]="['/contact', contact.id]">
-                    <div class="ml-2 name-text">{{contact.name}}</div>
-                    <div class="ml-2 other-text">{{contact.email}}</div>
-                    <div class="ml-2 other-text pt-1">+91 {{contact.mobile}}</div>
+                [routerLink]="['/contact', contact.Id]">
+                    <div class="ml-2 name-text">{{contact.ContactName}}</div>
+                    <div class="ml-2 other-text">{{contact.Email}}</div>
+                    <div class="ml-2 other-text pt-1">+91 {{contact.MobileNumber}}</div>
                 </div>
             </div>
         </div>

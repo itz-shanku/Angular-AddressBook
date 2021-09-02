@@ -22,8 +22,8 @@ export class EditContactComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.isUpdate = this.contactEntry.id as any;
-    this.id = this.contactEntry.id;
+    this.isUpdate = this.contactEntry.Id as any;
+    this.id = this.contactEntry.Id;
     if (!(this.isUpdate)){
       // tslint:disable-next-line: no-non-null-assertion
       document.getElementById('submission')!.innerHTML = 'Add';

@@ -6,7 +6,7 @@
             <div class="d-flex flex-column">
                 <label for="name">Name(Required)</label>
                 <input 
-                type="text" name="name" #name="ngModel" [(ngModel)]="contactEntry.name" minlength="3" required>
+                type="text" name="name" #name="ngModel" [(ngModel)]="contactEntry.ContactName" minlength="3" required>
             </div>
             <div id="name-help" class="text-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
                 <small *ngIf="name.errors?.required">Name is required.</small>
@@ -16,7 +16,7 @@
 
             <div class="d-flex flex-column mt-2">
                 <label for="email">Email(Required)</label>
-                <input type="text" #email="ngModel" [(ngModel)]="contactEntry.email" 
+                <input type="text" #email="ngModel" [(ngModel)]="contactEntry.Email" 
                 pattern="^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$"
                 required name="email">
             </div>
@@ -29,7 +29,7 @@
                 <div class="d-flex flex-column col px-0">
                     <label for="mobile">Mobile(Required)</label>
                     <input type="number" name="mobile" 
-                    #mobile="ngModel" [(ngModel)]="contactEntry.mobile"
+                    #mobile="ngModel" [(ngModel)]="contactEntry.MobileNumber"
                     pattern="^\d{10}$" required>
                     <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
                         <small id="mobile-help" class="text-danger d-flex flex-column col px-0" 
@@ -41,7 +41,7 @@
                 <div class="d-flex flex-column col pr-0">
                     <label for="landline">Landline</label>
                     <input type="number" name="landline" 
-                    #landline="ngModel" [(ngModel)]="contactEntry.landline"
+                    #landline="ngModel" [(ngModel)]="contactEntry.LandlineNumber"
                     pattern="^\d{10}$">
                     <small id="landline-help" class="text-danger row d-flex flex-column col pr-0" *ngIf="landline.errors?.pattern">Enter 10 digits landline number.</small>
                 </div>
@@ -50,7 +50,7 @@
             <div class="d-flex flex-column mt-2">
                 <label for="website">Website</label>
                 <input type="text" name="website"
-                #website="ngModel" [(ngModel)]="contactEntry.website" 
+                #website="ngModel" [(ngModel)]="contactEntry.WebsiteURL" 
                 pattern="^(www).[\w\-~]+\.[a-z]+$">
             </div>
             <small id="website-help" class="text-danger" *ngIf="website.errors?.pattern">Enter website in correct format.</small>
@@ -58,7 +58,7 @@
             <div class="d-flex flex-column  mt-2">
                 <label>Address</label>
                 <textarea name="address" rows="4"
-                #address="ngModel" [(ngModel)]="contactEntry.address"></textarea>
+                #address="ngModel" [(ngModel)]="contactEntry.ContactAddress"></textarea>
             </div>
         </div>
 
