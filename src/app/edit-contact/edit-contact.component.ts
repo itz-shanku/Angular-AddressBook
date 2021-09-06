@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ContactDetails } from '../model';
 import { ContactsService } from '../contacts.service';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-contact',
@@ -40,6 +41,7 @@ export class EditContactComponent implements OnInit {
     if (!(this.isUpdate)){
       this.addNewContact();
       this.isUpdate = true;
+      delay(1000);
       // tslint:disable-next-line: no-non-null-assertion
       document.getElementById('submission')!.innerHTML = 'Update';
     }
@@ -50,14 +52,18 @@ export class EditContactComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   addNewContact(){
-    this.contactServices.newContactPush(this.contactEntry);
+    this.contactServices.newContactPush(this.contactEntry).subscribe(
+      respose => window.alert(respose)
+    );
     this.closeModal();
     this.routing.navigateByUrl(this.contactServices.navigatingNewContact());
   }
 
   // tslint:disable-next-line: typedef
   submitUpdate(){
-    this.contactServices.updateContactList(this.contactEntry, this.id);
+    this.contactServices.updateContactList(this.contactEntry, this.id).subscribe(
+      response => window.alert(response)
+    );
     this.closeModal();
     this.onClose();
   }

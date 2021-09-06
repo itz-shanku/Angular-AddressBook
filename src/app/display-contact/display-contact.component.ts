@@ -33,15 +33,22 @@ export class DisplayContactComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   deleteContact(){
-    this.routing.navigateByUrl(this.contactServices.contactDeletion(this.id));
+    this.contactServices.deleteSpecificContact(this.id).subscribe(
+      response => window.alert(response)
+    );
+    this.routing.navigateByUrl(this.contactServices.loadInitialContact());
   }
 
   // tslint:disable-next-line: typedef
   openModal(){
     this.initialState = {
-      contactEntry : new ContactDetails(this.selectedContact),
+      contactEntry : new ContactDetails(this.contactServices.fetchSelectedContact(this.id).subscribe(
+        (specificContact: any) => this.selectedContact = specificContact
+      )),
       onClose: () => {
-        this.selectedContact = this.contactServices.fetchSelectedContact(this.id);
+        this.contactServices.fetchSelectedContact(this.id).subscribe(
+          (specificContact: any) => this.selectedContact = specificContact
+        );
       }
     };
     this.editContact();
