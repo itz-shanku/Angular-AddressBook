@@ -3,20 +3,40 @@
         <button type="button" class="close mr-4" (click)="closeModal();">&times;</button>
 
         <div class=" d-flex flex-column col-10 mt-3">
-            <div class="d-flex flex-column">
-                <label for="name">Name(Required)</label>
+            <div class="row">
+            <div class="d-flex flex-column col-6">
+                <label for="firstName">First Name(Required)</label>
                 <input 
-                type="text" name="name" #name="ngModel" [(ngModel)]="contactEntry.ContactName" minlength="3" required>
+                type="text" name="firstName" #firstName="ngModel" [(ngModel)]="contactEntry.name.firstName" minlength="3" required>
             </div>
-            <div id="name-help" class="text-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
-                <small *ngIf="name.errors?.required">Name is required.</small>
-                <small *ngIf="name.errors?.minlength">Min. 3 characters required.
+
+            <div class="d-flex flex-column col-6">
+                <label for="lastName">Last Name(Required)</label>
+                <input 
+                type="text" name="lastName" #lastName="ngModel" [(ngModel)]="contactEntry.name.lastName" minlength="3" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="d-flex flex-column col-6">
+            <div id="firstName-help" class="text-danger" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                <small *ngIf="firstName.errors?.required">First Name is required.</small>
+                <small *ngIf="firstName.errors?.minlength">Min. 3 characters required.</small>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column col-6">
+            <div id="lastName-help" class="text-danger" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                <small *ngIf="lastName.errors?.required">Last Name is required.</small>
+                <small *ngIf="lastName.errors?.minlength">Min. 3 characters required.
                 </small>
             </div>
+        </div>
+        </div>
 
             <div class="d-flex flex-column mt-2">
                 <label for="email">Email(Required)</label>
-                <input type="text" #email="ngModel" [(ngModel)]="contactEntry.Email" 
+                <input type="text" #email="ngModel" [(ngModel)]="contactEntry.email" 
                 pattern="^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$"
                 required name="email">
             </div>
@@ -29,7 +49,7 @@
                 <div class="d-flex flex-column col px-0">
                     <label for="mobile">Mobile(Required)</label>
                     <input type="number" name="mobile" 
-                    #mobile="ngModel" [(ngModel)]="contactEntry.MobileNumber"
+                    #mobile="ngModel" [(ngModel)]="contactEntry.mobileNumber"
                     pattern="^\d{10}$" required>
                     <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
                         <small id="mobile-help" class="text-danger d-flex flex-column col px-0" 
@@ -41,7 +61,7 @@
                 <div class="d-flex flex-column col pr-0">
                     <label for="landline">Landline</label>
                     <input type="number" name="landline" 
-                    #landline="ngModel" [(ngModel)]="contactEntry.LandlineNumber"
+                    #landline="ngModel" [(ngModel)]="contactEntry.landlineNumber"
                     pattern="^\d{10}$">
                     <small id="landline-help" class="text-danger row d-flex flex-column col pr-0" *ngIf="landline.errors?.pattern">Enter 10 digits landline number.</small>
                 </div>
@@ -50,15 +70,21 @@
             <div class="d-flex flex-column mt-2">
                 <label for="website">Website</label>
                 <input type="text" name="website"
-                #website="ngModel" [(ngModel)]="contactEntry.WebsiteURL" 
+                #website="ngModel" [(ngModel)]="contactEntry.websiteURL" 
                 pattern="^(www).[\w\-~]+\.[a-z]+$">
             </div>
             <small id="website-help" class="text-danger" *ngIf="website.errors?.pattern">Enter website in correct format.</small>
 
             <div class="d-flex flex-column  mt-2">
-                <label>Address</label>
-                <textarea name="address" rows="4"
-                #address="ngModel" [(ngModel)]="contactEntry.ContactAddress"></textarea>
+                <label>Address Line 1</label>
+                <textarea name="addressLine1" rows="3"
+                #addressLine1="ngModel" [(ngModel)]="contactEntry.address.addressLine1"></textarea>
+            </div>
+
+            <div class="d-flex flex-column  mt-2">
+                <label>Address Line 2</label>
+                <textarea name="addressLine2" rows="3"
+                #addressLine2="ngModel" [(ngModel)]="contactEntry.address.addressLine2"></textarea>
             </div>
         </div>
 

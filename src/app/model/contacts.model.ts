@@ -1,29 +1,47 @@
 export interface PersonDetails {
-    Id: number;
-    ContactName: string;
-    Email: string;
-    MobileNumber: string;
-    LandlineNumber: string;
-    WebsiteURL: string;
-    ContactAddress: string;
+    id: number;
+    email: string;
+    mobileNumber: string;
+    landlineNumber: string;
+    websiteURL: string;
+}
+
+export class ContactName {
+    firstName: string;
+    lastName: string;
+
+    constructor(newName: any) {
+        this.firstName = newName.firstName;
+        this.lastName = newName.lastName;
+    }
+}
+
+export class ContactAddress {
+    addressLine1: string;
+    addressLine2: string;
+
+    constructor(newAddress: any) {
+        this.addressLine1 = newAddress.addressLine1;
+        this.addressLine2 = newAddress.addressLine2;
+    }
 }
 
 export class ContactDetails implements PersonDetails {
-    Id: number;
-    ContactName: string;
-    Email: string;
-    MobileNumber: string;
-    LandlineNumber: string;
-    WebsiteURL: string;
-    ContactAddress: string;
+    id: number;
+    name: ContactName;
+    email: string;
+    mobileNumber: string;
+    landlineNumber: string;
+    websiteURL: string;
+    address: ContactAddress;
 
     constructor(newContact: any) {
-        this.Id = newContact.id;
-        this.ContactName = newContact.name;
-        this.Email = newContact.email;
-        this.MobileNumber = newContact.mobile;
-        this.LandlineNumber = newContact.landline;
-        this.WebsiteURL = newContact.website;
-        this.ContactAddress = newContact.address;
+        this.id = newContact.id;
+        this.name = newContact.name;
+        this.email = newContact.email;
+        this.mobileNumber = newContact.mobileNumber;
+        this.landlineNumber = newContact.landlineNumber;
+        this.websiteURL = newContact.websiteURL;
+        this.address = newContact.address;
     }
 }

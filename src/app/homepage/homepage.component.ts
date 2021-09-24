@@ -22,8 +22,8 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this.contactServices.getDefaultList().subscribe((listOfContacts: any) => {
       this.contactList = listOfContacts;
+      this.loadFirstContact(this.contactList[0].id);
     });
-    this.loadFirstContact();
   }
 
   // tslint:disable-next-line: typedef
@@ -32,7 +32,7 @@ export class HomepageComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  loadFirstContact(){
-    this.routing.navigateByUrl(this.contactServices.loadInitialContact());
+  loadFirstContact(id: any){
+    this.routing.navigateByUrl(`/contact/${id}`);
   }
 }
