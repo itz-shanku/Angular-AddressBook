@@ -1,104 +1,105 @@
-$primaryColor:rgb(22, 149, 199);
-$secondaryColor:#333333;
-$bodyColor:#FFFFFF;
-$hover:#FF9900;
-$hoverCard:#CEE7F2;
+$primaryColor: rgb(22, 149, 199);
+$secondaryColor: #333333;
+$bodyColor: #ffffff;
+$hover: #ff9900;
+$hoverCard: #cee7f2;
 
 @mixin font-size($size) {
-    font-size: $size !important;
+  font-size: $size !important;
 }
 
 body {
-    background-color: $bodyColor;
-    font-family: Arial, Helvetica, sans-serif;
+  background-color: $bodyColor;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.heading{
-    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
-    @include font-size(58px);
-    color:$bodyColor;
-    font-weight:lighter;
-    background-color: $primaryColor;
+.heading {
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  @include font-size(58px);
+  color: $bodyColor;
+  font-weight: lighter;
+  background-color: $primaryColor;
 }
 
-.menu{
-    background-color:$secondaryColor;
-    color:$bodyColor;
-    
-    a{
-        color: white !important;
-        padding: 0.6rem 1rem !important;
-        font-weight: 799;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        @include font-size(16px);
+.menu {
+  background-color: $secondaryColor;
+  color: $bodyColor;
 
-        &:hover{
-            background-color: $hover !important;
-            border-left: 5px solid white;
-            color: black !important;
-            text-decoration: none !important;
-        }
+  a {
+    color: white !important;
+    padding: 0.6rem 1rem !important;
+    font-weight: 799;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    @include font-size(16px);
+
+    &:hover {
+      background-color: $hover !important;
+      border-left: 5px solid white;
+      color: black !important;
+      text-decoration: none !important;
     }
+  }
 
-    .add-address{
-        @include font-size(16px);
-    }
+  .add-address {
+    @include font-size(16px);
+  }
 }
 
-.name-text{
-    @include font-size(30px);
-    font-weight: 350;
+.name-text {
+  @include font-size(30px);
+  font-weight: 350;
 }
 
-.other-text{
-    @include font-size(14px);
-    cursor: pointer !important;
+.other-text {
+  @include font-size(14px);
+  cursor: pointer !important;
 }
 
-.person-card:hover{
-    background-color: $hoverCard;
+.person-card:hover {
+  background-color: $hoverCard;
 }
 
-.contact-text{
-    @include font-size(14px);
+.contact-text {
+  @include font-size(14px);
 }
 
-.fit-height{
-    height: fit-content;
+.fit-height {
+  height: fit-content;
 }
 
-.detail-name{
-    font-size : 36px;
-    font-weight: 400;
+.detail-name {
+  font-size: 36px;
+  font-weight: 400;
 }
 
 @mixin font-size($size) {
-    font-size: $size !important;
+  font-size: $size !important;
 }
 
-.form-data{
-    box-shadow: 0px 0px 26px 0px rgba(0,0,0,0.75);
-    height: fit-content;
-    margin-bottom:30px ;
-     label{
-        font-weight: bold;
-    }
+.form-data {
+  box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.75);
+  height: fit-content;
+  margin-bottom: 30px;
+  label {
+    font-weight: bold;
+  }
 }
 
 .close {
-  color: #AAA;
+  color: #aaa;
   float: right;
   @include font-size(28px);
   font-weight: bold;
 }
 
-.close:hover, .close:focus {
+.close:hover,
+.close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
 .tab-spacing {
-    display: inline-block !important;
-    margin-left: 42px !important;
+  display: inline-block !important;
+  margin-left: 42px !important;
 }

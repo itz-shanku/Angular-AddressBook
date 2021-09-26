@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { ContactDetails, PersonDetails } from './model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -14,22 +14,21 @@ export class ContactsService {
   firstContactId: any;
   lastContactId: any;
 
-  
+  emitter = new EventEmitter<boolean>();
 
   constructor(
     private http: HttpClient
   ) { }
 
   // tslint:disable-next-line: typedef
-  loadInitialContact() {
-    this.firstContactId = this.contactList[0].id;
-    return `/contact/${this.firstContactId}`;
-  }
-
-  // tslint:disable-next-line: typedef
   getDefaultList(){
     this.contactList = this.http.get<ContactDetails>(this.apiURL);
     return this.contactList;
+  }
+
+  // tslint:disable-next-line: typedef
+  contactListUpdated(data: boolean){
+    this.emitter.emit(data);
   }
 
   // tslint:disable-next-line: typedef
@@ -56,5 +55,11 @@ export class ContactsService {
   navigatingNewContact(){
     this.lastContactId = this.contactList[this.contactList.lenght - 1].Id;
     return `/contact/${this.lastContactId}`;
+  }
+
+  // tslint:disable-next-line: typedef
+  loadFirstContact(id: any) {
+    // this.routing.navigateByUrl();
+    return `/contact/${id}`;
   }
 }

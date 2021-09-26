@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ContactsService } from '../contacts.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { EditContactComponent } from '../edit-contact';
 import { ContactDetails } from '../model';
-import { HomepageComponent } from '../homepage';
+import { Component, OnInit } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { ContactsService } from '../contacts.service';
+import { EditContactComponent } from '../edit-contact';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-contact',
@@ -38,11 +37,7 @@ export class DisplayContactComponent implements OnInit {
   deleteContact() {
     this.contactServices
       .deleteContact(this.id)
-      .subscribe((response) => console.log(response));
-    this.contactServices.getDefaultList().subscribe((listOfContacts: any) => {
-      this.contactServices.contactList = listOfContacts;
-    });
-    this.routing.navigateByUrl(this.contactServices.loadInitialContact());
+      .subscribe((result) => this.contactServices.contactListUpdated(true));
   }
 
   // tslint:disable-next-line: typedef
@@ -54,6 +49,7 @@ export class DisplayContactComponent implements OnInit {
           .fetchContact(this.id)
           .subscribe((specificContact: any) => {
             this.selectedContact = specificContact;
+            this.routing.navigateByUrl(`/contact/${this.selectedContact.id}`);
           });
       },
     };

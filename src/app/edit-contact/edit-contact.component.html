@@ -1,95 +1,172 @@
 <div class="modal-content position-absolute">
-    <form class="position-absoulte" #contactForm="ngForm">
-        <button type="button" class="close mr-4" (click)="closeModal();">&times;</button>
+  <form class="position-absoulte" [formGroup]="contactForm">
+    <button
+      type="button"
+      class="close mr-4"
+      (click)="closeModal()"
+      (ngSubmit)="onSubmit()"
+    >
+      &times;
+    </button>
 
-        <div class=" d-flex flex-column col-10 mt-3">
-            <div class="row">
-            <div class="d-flex flex-column col-6">
-                <label for="firstName">First Name(Required)</label>
-                <input 
-                type="text" name="firstName" #firstName="ngModel" [(ngModel)]="contactEntry.name.firstName" minlength="3" required>
-            </div>
-
-            <div class="d-flex flex-column col-6">
-                <label for="lastName">Last Name(Required)</label>
-                <input 
-                type="text" name="lastName" #lastName="ngModel" [(ngModel)]="contactEntry.name.lastName" minlength="3" required>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="d-flex flex-column col-6">
-            <div id="firstName-help" class="text-danger" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
-                <small *ngIf="firstName.errors?.required">First Name is required.</small>
-                <small *ngIf="firstName.errors?.minlength">Min. 3 characters required.</small>
-            </div>
+    <div class="d-flex flex-column col-10 mt-3">
+      <div class="row">
+        <div class="d-flex flex-column col-6">
+          <label for="firstName">First Name(Required)</label>
+          <input
+            type="text"
+            name="firstName"
+            formControlName="firstName"
+            required
+          />
         </div>
 
         <div class="d-flex flex-column col-6">
-            <div id="lastName-help" class="text-danger" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-                <small *ngIf="lastName.errors?.required">Last Name is required.</small>
-                <small *ngIf="lastName.errors?.minlength">Min. 3 characters required.
-                </small>
-            </div>
+          <label for="lastName">Last Name(Required)</label>
+          <input
+            type="text"
+            name="lastName"
+            formControlName="lastName"
+            required
+          />
         </div>
-        </div>
+      </div>
 
-            <div class="d-flex flex-column mt-2">
-                <label for="email">Email(Required)</label>
-                <input type="text" #email="ngModel" [(ngModel)]="contactEntry.email" 
-                pattern="^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$"
-                required name="email">
-            </div>
-            <div id="email-help" class="text-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-                <small *ngIf="email.errors?.required">Email is required</small>
-                <small *ngIf="email.errors?.pattern">Please enter email in the correct format</small>
-            </div>
-    
-            <div class="d-flex mt-2 ">
-                <div class="d-flex flex-column col px-0">
-                    <label for="mobile">Mobile(Required)</label>
-                    <input type="number" name="mobile" 
-                    #mobile="ngModel" [(ngModel)]="contactEntry.mobileNumber"
-                    pattern="^\d{10}$" required>
-                    <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
-                        <small id="mobile-help" class="text-danger d-flex flex-column col px-0" 
-                        *ngIf="mobile.errors?.required">Mobile is required.</small>
-                        <small id="mobile-help" class="text-danger d-flex flex-column col px-0" 
-                        *ngIf="mobile.errors?.pattern">Enter 10 digits mobile number.</small>
-                    </div>
-                </div>
-                <div class="d-flex flex-column col pr-0">
-                    <label for="landline">Landline</label>
-                    <input type="number" name="landline" 
-                    #landline="ngModel" [(ngModel)]="contactEntry.landlineNumber"
-                    pattern="^\d{10}$">
-                    <small id="landline-help" class="text-danger row d-flex flex-column col pr-0" *ngIf="landline.errors?.pattern">Enter 10 digits landline number.</small>
-                </div>
-            </div>
-            
-            <div class="d-flex flex-column mt-2">
-                <label for="website">Website</label>
-                <input type="text" name="website"
-                #website="ngModel" [(ngModel)]="contactEntry.websiteURL" 
-                pattern="^(www).[\w\-~]+\.[a-z]+$">
-            </div>
-            <small id="website-help" class="text-danger" *ngIf="website.errors?.pattern">Enter website in correct format.</small>
-
-            <div class="d-flex flex-column  mt-2">
-                <label>Address Line 1</label>
-                <textarea name="addressLine1" rows="3"
-                #addressLine1="ngModel" [(ngModel)]="contactEntry.address.addressLine1"></textarea>
-            </div>
-
-            <div class="d-flex flex-column  mt-2">
-                <label>Address Line 2</label>
-                <textarea name="addressLine2" rows="3"
-                #addressLine2="ngModel" [(ngModel)]="contactEntry.address.addressLine2"></textarea>
-            </div>
+      <div class="row">
+        <div class="d-flex flex-column col-6">
+          <div
+            id="firstName-help"
+            class="text-danger"
+            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+          >
+            <small *ngIf="firstName.errors?.required"
+              >First Name is required.</small
+            >
+            <small *ngIf="firstName.errors?.minlength"
+              >Min. 3 characters required.</small
+            >
+          </div>
         </div>
 
-        <div class="d-flex mt-5 mb-3 float-right mr-2">
-            <button name="button" id="submission" class="btn btn-success px-5" type="submit" (click)="onSubmit()" [disabled]="contactForm.invalid">Update</button>
+        <div class="d-flex flex-column col-6">
+          <div
+            id="lastName-help"
+            class="text-danger"
+            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+          >
+            <small *ngIf="lastName.errors?.required"
+              >Last Name is required.</small
+            >
+            <small *ngIf="lastName.errors?.minlength"
+              >Min. 3 characters required.
+            </small>
+          </div>
         </div>
-</form>
+      </div>
+
+      <div class="d-flex flex-column mt-2">
+        <label for="email">Email(Required)</label>
+        <input type="text" name="email" formControlName="email" required />
+      </div>
+      <div
+        id="email-help"
+        class="text-danger"
+        *ngIf="email.invalid && (email.dirty || email.touched)"
+      >
+        <small *ngIf="email.errors?.required">Email is required</small>
+        <small *ngIf="email.errors?.pattern"
+          >Please enter email in the correct format</small
+        >
+      </div>
+
+      <div class="d-flex mt-2">
+        <div class="d-flex flex-column col px-0">
+          <label for="mobile">Mobile(Required)</label>
+          <input
+            type="number"
+            name="mobile"
+            formControlName="mobileNumber"
+            id="mobileNumber"
+            required
+          />
+          <div
+            *ngIf="
+              mobileNumber.invalid &&
+              (mobileNumber.dirty || mobileNumber.touched)
+            "
+          >
+            <small
+              id="mobile-help"
+              class="text-danger d-flex flex-column col px-0"
+              *ngIf="mobileNumber.errors?.required"
+              >Mobile is required.</small
+            >
+            <small
+              id="mobile-help"
+              class="text-danger d-flex flex-column col px-0"
+              *ngIf="mobileNumber.errors?.pattern"
+              >Enter 10 digits mobile number.</small
+            >
+          </div>
+        </div>
+
+        <div class="d-flex flex-column col pr-0">
+          <label for="landline">Landline</label>
+          <input
+            type="number"
+            name="landline"
+            formControlName="landlineNumber"
+          />
+          <small
+            id="landline-help"
+            class="text-danger row d-flex flex-column col pr-0"
+            *ngIf="landlineNumber.errors?.pattern"
+            >Enter 10 digits landline number.</small
+          >
+        </div>
+      </div>
+
+      <div class="d-flex flex-column mt-2">
+        <label for="website">Website</label>
+        <input type="text" name="website" formControlName="website" />
+      </div>
+      <small
+        id="website-help"
+        class="text-danger"
+        *ngIf="website.errors?.pattern"
+        >Enter website in correct format.</small
+      >
+
+      <div class="d-flex flex-column mt-2">
+        <label>Address Line 1</label>
+        <textarea
+          name="addressLine1"
+          rows="3"
+          formControlName="addressLine1"
+        ></textarea>
+      </div>
+
+      <div class="d-flex flex-column mt-2">
+        <label>Address Line 2</label>
+        <textarea
+          name="addressLine2"
+          rows="3"
+          formControlName="addressLine2"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex mt-5 mb-3 float-right mr-2">
+      <button
+        name="button"
+        id="submission"
+        class="btn btn-success px-5"
+        type="submit"
+        (click)="onSubmit()"
+        [disabled]="contactForm.invalid"
+      >
+        Update
+      </button>
+    </div>
+  </form>
 </div>
