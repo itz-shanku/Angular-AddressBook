@@ -1,65 +1,51 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { ContactDetails, PersonDetails } from './model';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, EventEmitter } from '@angular/core';
+import { ContactDetails, UpdateDetails } from './model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContactsService {
-
   private apiURL = 'https://localhost:44321/api/addressbook';
 
-  contactList: ContactDetails | any = ({});
-  firstContactId: any;
-  lastContactId: any;
+  contactList: ContactDetails | any = {};
 
-  emitter = new EventEmitter<boolean>();
+  contactListUpdate = new EventEmitter<UpdateDetails>();
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   // tslint:disable-next-line: typedef
-  getDefaultList(){
+  getContacts() {
     this.contactList = this.http.get<ContactDetails>(this.apiURL);
     return this.contactList;
   }
 
   // tslint:disable-next-line: typedef
-  contactListUpdated(data: boolean){
-    this.emitter.emit(data);
+  contactsUpdated(data: UpdateDetails) {
+    this.contactListUpdate.emit(data);
   }
 
   // tslint:disable-next-line: typedef
-  updateContact(openContact: any, id: any): Observable<PersonDetails>{
-    return this.http.put<ContactDetails>(this.apiURL + `/contact/${id}/update`, openContact);
+  updateContact(openContact: any, id: any): Observable<ContactDetails> {
+    return this.http.put<ContactDetails>(
+      `${this.apiURL}/contact/${id}/update`,
+      openContact
+    );
   }
 
   // tslint:disable-next-line: typedef
-  deleteContact(id: any): Observable<unknown>{
-    return this.http.delete(this.apiURL + `/contact/${id}/delete`);
+  deleteContact(id: any): Observable<unknown> {
+    return this.http.delete(`${this.apiURL}/contact/${id}/delete`);
   }
 
   // tslint:disable-next-line: typedef
-  fetchContact(id: any){
-    return this.http.get<ContactDetails>(this.apiURL + `/contact/${id}`);
+  getContact(id: any) {
+    return this.http.get<ContactDetails>(`${this.apiURL}/contact/${id}`);
   }
 
   // tslint:disable-next-line: typedef
-  newContactPush(newEntry: any): Observable<PersonDetails>{
-    return this.http.post<ContactDetails>(this.apiURL + '/add', newEntry);
-  }
-
-  // tslint:disable-next-line: typedef
-  navigatingNewContact(){
-    this.lastContactId = this.contactList[this.contactList.lenght - 1].Id;
-    return `/contact/${this.lastContactId}`;
-  }
-
-  // tslint:disable-next-line: typedef
-  loadFirstContact(id: any) {
-    // this.routing.navigateByUrl();
-    return `/contact/${id}`;
+  pushContact(newEntry: any): Observable<ContactDetails> {
+    return this.http.post<ContactDetails>(`${this.apiURL}/add`, newEntry);
   }
 }

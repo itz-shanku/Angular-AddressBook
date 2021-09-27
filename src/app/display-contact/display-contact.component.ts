@@ -1,9 +1,9 @@
-import { ContactDetails } from '../model';
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ContactsService } from '../contacts.service';
 import { EditContactComponent } from '../edit-contact';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ContactDetails, ContactOperation } from '../model';
 
 @Component({
   selector: 'app-display-contact',
@@ -17,8 +17,7 @@ export class DisplayContactComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private contactServices: ContactsService,
-    private modalService: BsModalService,
-    private routing: Router
+    private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +25,7 @@ export class DisplayContactComponent implements OnInit {
       this.id = param.id;
       // tslint:disable-next-line: no-shadowed-variable
       this.contactServices
-        .fetchContact(this.id)
+        .getContact(this.id)
         .subscribe((specificContact: any) => {
           this.selectedContact = specificContact;
         });
@@ -35,9 +34,12 @@ export class DisplayContactComponent implements OnInit {
 
   // tslint:disable-next-line: typedef
   deleteContact() {
-    this.contactServices
-      .deleteContact(this.id)
-      .subscribe((result) => this.contactServices.contactListUpdated(true));
+    this.contactServices.deleteContact(this.id).subscribe((result) =>
+      this.contactServices.contactsUpdated({
+        operationType: ContactOperation.DELETE,
+        id: null,
+      })
+    );
   }
 
   // tslint:disable-next-line: typedef
@@ -46,10 +48,9 @@ export class DisplayContactComponent implements OnInit {
       contactEntry: new ContactDetails(this.selectedContact),
       onClose: () => {
         this.contactServices
-          .fetchContact(this.id)
+          .getContact(this.id)
           .subscribe((specificContact: any) => {
             this.selectedContact = specificContact;
-            this.routing.navigateByUrl(`/contact/${this.selectedContact.id}`);
           });
       },
     };

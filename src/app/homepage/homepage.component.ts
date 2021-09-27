@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ContactsService } from '../contacts.service';
 import { EditContactComponent } from '../edit-contact';
+import { ContactOperation, UpdateDetails } from '../model';
 
 @Component({
   selector: 'app-homepage',
@@ -19,11 +20,11 @@ export class HomepageComponent implements OnInit {
   id: any;
 
   ngOnInit(): void {
-    this.loadContactList();
+    this.loadContacts(new UpdateDetails({}));
 
-    this.contactServices.emitter.subscribe((data) => {
-      if (data === true) { this.loadContactList(); }
-    });
+    this.contactServices.contactListUpdate.subscribe((data) =>
+      this.loadContacts(data)
+    );
   }
 
   // tslint:disable-next-line: typedef
@@ -32,15 +33,24 @@ export class HomepageComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  loadFirstContact(id: any) {
+  loadContact(id: any) {
     this.routing.navigateByUrl(`/contact/${id}`);
   }
 
   // tslint:disable-next-line: typedef
-  loadContactList() {
-    this.contactServices.getDefaultList().subscribe((listOfContacts: any) => {
+  loadContacts(data: UpdateDetails) {
+    this.contactServices.getContacts().subscribe((listOfContacts: any) => {
       this.contactList = listOfContacts;
-      this.loadFirstContact(this.contactList[0].id);
+      switch (data.operationType) {
+        case ContactOperation.ADD:
+        case ContactOperation.EDIT:
+          this.loadContact(data.id);
+          break;
+        case ContactOperation.DELETE:
+        default:
+          this.loadContact(this.contactList[0].id);
+          break;
+      }
     });
   }
 }

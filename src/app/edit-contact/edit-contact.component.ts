@@ -1,41 +1,37 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ContactsService } from '../contacts.service';
+import { ContactDetails, ContactOperation } from '../model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ContactDetails, ContactName, ContactAddress } from '../model';
 
 @Component({
   selector: 'app-edit-contact',
   templateUrl: './edit-contact.component.html',
 })
 export class EditContactComponent implements OnInit {
-  id: any;
   isUpdate = false;
-  contactEntry = new ContactDetails({
-    name: new ContactName({}),
-    address: new ContactAddress({}),
-  });
+  contactEntry = new ContactDetails({});
   onClose: any;
-  contactList: any;
   contactForm: any;
 
   constructor(
     private modalServices: BsModalService,
-    private contactServices: ContactsService,
-    private routing: Router
+    private contactServices: ContactsService
   ) {}
 
   ngOnInit(): void {
     this.contactForm = new FormGroup({
-      firstName: new FormControl(this.contactEntry.name.firstName, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl(this.contactEntry.name.lastName, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
+      id: new FormControl(this.contactEntry.id),
+      name: new FormGroup({
+        firstName: new FormControl(this.contactEntry.name.firstName, [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        lastName: new FormControl(this.contactEntry.name.lastName, [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+      }),
       email: new FormControl(this.contactEntry.email, [
         Validators.required,
         Validators.pattern(
@@ -49,31 +45,29 @@ export class EditContactComponent implements OnInit {
       landlineNumber: new FormControl(this.contactEntry.landlineNumber, [
         Validators.pattern('\\d{10}'),
       ]),
-      website: new FormControl(this.contactEntry.websiteURL, [
+      websiteURL: new FormControl(this.contactEntry.websiteURL, [
         Validators.pattern(
           '^((https?|ftp|smtp):\\/\\/)?(www.)[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$'
         ),
       ]),
-      addressLine1: new FormControl(this.contactEntry.address.addressLine1),
-      addressLine2: new FormControl(this.contactEntry.address.addressLine2),
+      address: new FormGroup({
+        addressLine1: new FormControl(this.contactEntry.address.addressLine1),
+        addressLine2: new FormControl(this.contactEntry.address.addressLine2),
+      }),
     });
 
     this.isUpdate = this.contactEntry.id as any;
-    this.id = this.contactEntry.id;
-    if (!this.isUpdate) {
-      // tslint:disable-next-line: no-non-null-assertion
-      document.getElementById('submission')!.innerHTML = 'Add';
-    }
+    this.contactForm.id = this.contactEntry.id;
   }
 
   // tslint:disable-next-line: typedef
   get firstName() {
-    return this.contactForm.get('firstName');
+    return this.contactForm.get(['name', 'firstName']);
   }
 
   // tslint:disable-next-line: typedef
   get lastName() {
-    return this.contactForm.get('lastName');
+    return this.contactForm.get(['name', 'lastName']);
   }
 
   // tslint:disable-next-line: typedef
@@ -92,18 +86,18 @@ export class EditContactComponent implements OnInit {
   }
 
   // tslint:disable-next-line: typedef
-  get website() {
-    return this.contactForm.get('website');
+  get websiteURL() {
+    return this.contactForm.get('websiteURL');
   }
 
   // tslint:disable-next-line: typedef
   get addressLine1() {
-    return this.contactForm.get('addressLine1');
+    return this.contactForm.get(['address', 'addressLine1']);
   }
 
   // tslint:disable-next-line: typedef
   get addressLine2() {
-    return this.contactForm.get('addressLine2');
+    return this.contactForm.get(['address', 'addressLine2']);
   }
 
   // tslint:disable-next-line: typedef
@@ -114,34 +108,36 @@ export class EditContactComponent implements OnInit {
   // tslint:disable-next-line: typedef
   onSubmit() {
     if (!this.isUpdate) {
-      this.addNewContact();
+      this.addContact();
       this.isUpdate = true;
-      // tslint:disable-next-line: no-non-null-assertion
-      document.getElementById('submission')!.innerHTML = 'Update';
     } else {
-      this.submitUpdate();
+      this.updateContact();
     }
   }
 
   // tslint:disable-next-line: typedef
-  addNewContact() {
+  addContact() {
     this.contactServices
-      .newContactPush(this.contactForm)
+      .pushContact(this.contactForm.value)
       .subscribe((response) => {
-        this.contactServices.contactListUpdated(true);
-        this.routing.navigateByUrl(`/contact/${response}`);
+        this.contactServices.contactsUpdated({
+          operationType: ContactOperation.ADD,
+          id: response,
+        });
       });
     this.closeModal();
   }
 
-  // edit
   // tslint:disable-next-line: typedef
-  submitUpdate() {
+  updateContact() {
     this.contactServices
-      .updateContact(this.contactForm, this.id)
-      .subscribe((response) => {
+      .updateContact(this.contactForm.value, this.contactForm.id)
+      .subscribe(() => {
         this.onClose();
-        this.contactServices.contactListUpdated(true);
+        this.contactServices.contactsUpdated({
+          operationType: ContactOperation.EDIT,
+          id: this.contactForm.id,
+        });
       });
     this.closeModal();
   }

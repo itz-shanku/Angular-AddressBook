@@ -10,56 +10,60 @@
     </button>
 
     <div class="d-flex flex-column col-10 mt-3">
-      <div class="row">
-        <div class="d-flex flex-column col-6">
-          <label for="firstName">First Name(Required)</label>
-          <input
-            type="text"
-            name="firstName"
-            formControlName="firstName"
-            required
-          />
-        </div>
+      <div formGroupName="name">
+        <div class="row">
+          <div class="d-flex flex-column col-6">
+            <label for="firstName">First Name(Required)</label>
+            <input
+              type="text"
+              name="firstName"
+              formControlName="firstName"
+              required
+            />
+          </div>
 
-        <div class="d-flex flex-column col-6">
-          <label for="lastName">Last Name(Required)</label>
-          <input
-            type="text"
-            name="lastName"
-            formControlName="lastName"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="d-flex flex-column col-6">
-          <div
-            id="firstName-help"
-            class="text-danger"
-            *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
-          >
-            <small *ngIf="firstName.errors?.required"
-              >First Name is required.</small
-            >
-            <small *ngIf="firstName.errors?.minlength"
-              >Min. 3 characters required.</small
-            >
+          <div class="d-flex flex-column col-6">
+            <label for="lastName">Last Name(Required)</label>
+            <input
+              type="text"
+              name="lastName"
+              formControlName="lastName"
+              required
+            />
           </div>
         </div>
 
-        <div class="d-flex flex-column col-6">
-          <div
-            id="lastName-help"
-            class="text-danger"
-            *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
-          >
-            <small *ngIf="lastName.errors?.required"
-              >Last Name is required.</small
+        <div class="row">
+          <div class="d-flex flex-column col-6">
+            <div
+              id="firstName-help"
+              class="text-danger"
+              *ngIf="
+                firstName.invalid && (firstName.dirty || firstName.touched)
+              "
             >
-            <small *ngIf="lastName.errors?.minlength"
-              >Min. 3 characters required.
-            </small>
+              <small *ngIf="firstName.errors?.required"
+                >First Name is required.</small
+              >
+              <small *ngIf="firstName.errors?.minlength"
+                >Min. 3 characters required.</small
+              >
+            </div>
+          </div>
+
+          <div class="d-flex flex-column col-6">
+            <div
+              id="lastName-help"
+              class="text-danger"
+              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+            >
+              <small *ngIf="lastName.errors?.required"
+                >Last Name is required.</small
+              >
+              <small *ngIf="lastName.errors?.minlength"
+                >Min. 3 characters required.
+              </small>
+            </div>
           </div>
         </div>
       </div>
@@ -128,31 +132,33 @@
 
       <div class="d-flex flex-column mt-2">
         <label for="website">Website</label>
-        <input type="text" name="website" formControlName="website" />
+        <input type="text" name="website" formControlName="websiteURL" />
       </div>
       <small
         id="website-help"
         class="text-danger"
-        *ngIf="website.errors?.pattern"
+        *ngIf="websiteURL.errors?.pattern"
         >Enter website in correct format.</small
       >
 
-      <div class="d-flex flex-column mt-2">
-        <label>Address Line 1</label>
-        <textarea
-          name="addressLine1"
-          rows="3"
-          formControlName="addressLine1"
-        ></textarea>
-      </div>
+      <div formGroupName="address">
+        <div class="d-flex flex-column mt-2">
+          <label>Address Line 1</label>
+          <textarea
+            name="addressLine1"
+            rows="3"
+            formControlName="addressLine1"
+          ></textarea>
+        </div>
 
-      <div class="d-flex flex-column mt-2">
-        <label>Address Line 2</label>
-        <textarea
-          name="addressLine2"
-          rows="3"
-          formControlName="addressLine2"
-        ></textarea>
+        <div class="d-flex flex-column mt-2">
+          <label>Address Line 2</label>
+          <textarea
+            name="addressLine2"
+            rows="3"
+            formControlName="addressLine2"
+          ></textarea>
+        </div>
       </div>
     </div>
 
@@ -165,7 +171,7 @@
         (click)="onSubmit()"
         [disabled]="contactForm.invalid"
       >
-        Update
+        {{ !isUpdate ? 'Add' : 'Update' }}
       </button>
     </div>
   </form>

@@ -37,11 +37,11 @@ export class ContactDetails implements PersonDetails {
 
   constructor(newContact: any) {
     this.id = newContact.id;
-    this.name = newContact.name;
+    this.name = newContact.name || new ContactName({});
     this.email = newContact.email;
     this.mobileNumber = newContact.mobileNumber;
     this.landlineNumber = newContact.landlineNumber;
     this.websiteURL = newContact.websiteURL;
-    this.address = newContact.address;
+    this.address =  newContact.address || new ContactAddress({});
   }
 }
