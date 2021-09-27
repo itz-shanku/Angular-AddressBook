@@ -8,7 +8,8 @@
         {{ selectedContact.name.firstName }} {{ selectedContact.name.lastName }}
       </div>
       <div id="detail-email" class="ml-3 mt-1">
-        Email: {{ selectedContact.email }}
+        Email:
+        <a href="{{ selectedContact.email }}">{{ selectedContact.email }} </a>
       </div>
       <div id="detail-mobile" class="ml-3 mt-3">
         Mobile: +91 {{ selectedContact.mobileNumber }}
@@ -17,7 +18,10 @@
         Landline: {{ selectedContact.landlineNumber }}
       </div>
       <div id="detail-website" class="ml-3 mt-3">
-        Website: {{ selectedContact.websiteURL }}
+        Website:
+        <a href="{{ selectedContact.websiteURL }}"
+          >{{ selectedContact.websiteURL }}
+        </a>
       </div>
       <div id="detail-address" class="ml-3">
         Address: {{ selectedContact.address.addressLine1 }}

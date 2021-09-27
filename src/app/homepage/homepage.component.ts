@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this.loadContacts(new UpdateDetails({}));
 
-    this.contactServices.contactListUpdate.subscribe((data) =>
+    this.contactServices.contactsUpdate.subscribe((data) =>
       this.loadContacts(data)
     );
   }

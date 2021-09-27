@@ -11,7 +11,7 @@ export class ContactsService {
 
   contactList: ContactDetails | any = {};
 
-  contactListUpdate = new EventEmitter<UpdateDetails>();
+  contactsUpdate = new EventEmitter<UpdateDetails>();
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class ContactsService {
 
   // tslint:disable-next-line: typedef
   contactsUpdated(data: UpdateDetails) {
-    this.contactListUpdate.emit(data);
+    this.contactsUpdate.emit(data);
   }
 
   // tslint:disable-next-line: typedef
@@ -35,7 +35,7 @@ export class ContactsService {
   }
 
   // tslint:disable-next-line: typedef
-  deleteContact(id: any): Observable<unknown> {
+  deleteContact(id: any): Observable<any> {
     return this.http.delete(`${this.apiURL}/contact/${id}/delete`);
   }
 
